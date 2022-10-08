@@ -35,7 +35,6 @@ class TableViewSectionHeader: UIView {
     }
     
     func configure() {
-        self.backgroundColor = .orange
         
         [searchBar,categorySegemts].forEach{
             self.addSubview($0)

@@ -13,10 +13,24 @@ protocol DataStoreSendType {
 }
 
 class DataStoreFetable: DataStoreSendType{
-    static var dummyCommunityModel: [RxDataModel] = [RxDataModel(headerTitle: "collection", items:
-                                                                    [CommuityDataModel(titleType: "문의", content:"실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?"),
-                                                                     CommuityDataModel(titleType: "가격", content:"실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?"),
-                                                                     CommuityDataModel(titleType: "전문가검색", content:"실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?")])]
+    static var dummyCommunityModel: [RxDataModel] = [
+        RxDataModel(headerTitle: "collection", items:
+                        [CommuityDataModel(titleType: "문의", content:"실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?"),
+                         CommuityDataModel(titleType: "가격", content:"실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?"),
+                         CommuityDataModel(titleType: "전문가검색", content:"실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?")]),
+        
+        
+        RxDataModel(headerTitle: "table", items:
+                        [CommuityDataModel(titleType: "문의", content:"실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?")]),
+        RxDataModel(headerTitle: "table", items:
+                        [CommuityDataModel(titleType: "문의", content:"실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?")]),
+        RxDataModel(headerTitle: "table", items:
+                        [CommuityDataModel(titleType: "문의", content:"실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?")]),
+        RxDataModel(headerTitle: "table", items:
+                        [CommuityDataModel(titleType: "문의", content:"실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?")]),
+        RxDataModel(headerTitle: "table", items:
+                        [CommuityDataModel(titleType: "문의", content:"실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?")])
+    ]
     
     func fetch() -> Observable<[RxDataModel]> {
         return Observable.create{ emiter in
@@ -77,7 +91,7 @@ final class RxViewModel: RxViewModelType{
                 }
                 section.append(CommunitySection(model: "firstSection", items: typeOnemodels))
                 section.append(CommunitySection(model: "secondSection", items: typeTwomodels))
-                print("domain \(section)")
+                
                 return section
             }
             .subscribe(onNext: communityContents.onNext(_:))

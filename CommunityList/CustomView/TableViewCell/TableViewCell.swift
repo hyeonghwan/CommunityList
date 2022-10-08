@@ -41,9 +41,10 @@ final class TableViewCell: UITableViewCell {
         
         subject
             .observe(on: MainScheduler.instance)
+            .map{data in return data}
             .subscribe(onNext: { data in
-                print("tableViewCell : \(data)")
-                self.label.text = data.items.first?.content
+                
+//                self.label.text = data.con
             })
             .disposed(by: disposeBag)
     

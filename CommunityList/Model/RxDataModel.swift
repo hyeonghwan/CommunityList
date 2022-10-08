@@ -25,6 +25,7 @@ extension RxDataModel: AnimatableSectionModelType {
     
     init(original: RxDataModel, items: [CommuityDataModel]) {
         self = original
+        
         self.items = items
     }
 }

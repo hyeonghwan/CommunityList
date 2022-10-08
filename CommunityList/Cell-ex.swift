@@ -20,4 +20,30 @@ extension IdentifiableProtocol{
 
 extension TableViewCell: IdentifiableProtocol {}
 extension HorizonTalTableSectionCell: IdentifiableProtocol {}
+extension HorizontalCollectionViewCell: IdentifiableProtocol {}
 
+extension UICollectionView {
+    static func settingCollectionView() -> UICollectionView {
+        let layout = UICollectionViewFlowLayout()
+        
+        layout.scrollDirection = .horizontal
+        
+        //paginaitionView Size
+        
+        layout.itemSize = CGSize(width: 180, height: 174)
+        
+        layout.minimumLineSpacing = 16
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        
+        collectionView.isPagingEnabled = false
+        
+        collectionView.showsHorizontalScrollIndicator = true
+        
+        collectionView.backgroundColor = .tertiarySystemBackground
+        
+        collectionView.register(HorizontalCollectionViewCell.self, forCellWithReuseIdentifier: HorizontalCollectionViewCell.identify)
+        
+        return collectionView
+    }
+}

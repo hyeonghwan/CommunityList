@@ -23,10 +23,16 @@ class ViewController: UIViewController {
     }()
     
     lazy var containerTableView: UITableView = {
+        
         let tableview = UITableView(frame: .zero, style: .grouped)
+        
+        tableview.backgroundColor = .tertiarySystemBackground
+        
+        tableview.separatorStyle = .none
+        
         tableview.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.identify)
+        
         tableview.register(HorizonTalTableSectionCell.self, forCellReuseIdentifier: HorizonTalTableSectionCell.identify)
-        tableview.backgroundColor = .systemCyan
 
        return tableview
     }()
@@ -38,20 +44,21 @@ class ViewController: UIViewController {
     
     var tableDataSource = RxTableViewSectionedReloadDataSource<CommunitySection>(configureCell: {
         dataSource, tableView, indexPath, item in
-        print("item \(item)")
+    
         let section = TableViewSectionType(rawValue: indexPath.section)
-        print("section \(section)")
+        
         switch section{
         case .collection:
             guard let collectionViewcell = tableView.dequeueReusableCell(withIdentifier: HorizonTalTableSectionCell.identify, for: indexPath) as? HorizonTalTableSectionCell else { return UITableViewCell() }
             
+            collectionViewcell.onData.onNext(item)
             
             return collectionViewcell
             
         case .table:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identify, for: indexPath)
                     as? TableViewCell else {return UITableViewCell()}
-          
+            
             cell.onData.onNext(item)
             return cell
         default:
@@ -95,6 +102,7 @@ class ViewController: UIViewController {
         
    }
     
+ 
     func setUpBinding() {
         viewModel.allContents
             .bind(to: containerTableView.rx.items(dataSource: tableDataSource))
@@ -104,7 +112,16 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDelegate{
     
-
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.section{
+        case 0:
+            return CGFloat(300)
+        default:
+            return .leastNormalMagnitude
+        }
+    }
+    
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?{
         switch section{
         case 0:
