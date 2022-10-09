@@ -19,14 +19,14 @@ class HorizonTalTableSectionCell: UITableViewCell{
         
         return view
     }()
-    
-    var onData: AnyObserver<RxDataModel>
+
+    var onData: AnyObserver<RxData>
     
     var disposeBag = DisposeBag()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         
-        let subject = PublishSubject<RxDataModel>()
+        let subject = PublishSubject<RxData>()
         
         onData = subject.asObserver()
          
@@ -35,7 +35,7 @@ class HorizonTalTableSectionCell: UITableViewCell{
         layoutconfigure()
         
         subject
-            .map{rxDataModel in rxDataModel.items }
+            .map{ rxDataModel in  return rxDataModel.items }
             .bind(to: self.horizontalCollectionView.rx.items(cellIdentifier: HorizontalCollectionViewCell.identify,
                                                              cellType: HorizontalCollectionViewCell.self)){
                 indexPath, item, cell in

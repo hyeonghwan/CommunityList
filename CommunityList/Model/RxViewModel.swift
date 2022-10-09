@@ -7,51 +7,15 @@
 
 import Foundation
 import RxSwift
-
-protocol DataStoreSendType {
-    func fetch() -> Observable<[RxDataModel]>
-}
-
-class DataStoreFetable: DataStoreSendType{
-    static var dummyCommunityModel: [RxDataModel] = [
-        RxDataModel(headerTitle: "collection", items:
-                        [CommuityDataModel(titleType: "문의", content:"실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?"),
-                         CommuityDataModel(titleType: "가격", content:"실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?"),
-                         CommuityDataModel(titleType: "전문가검색", content:"실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?")]),
-        
-        
-        RxDataModel(headerTitle: "table", items:
-                        [CommuityDataModel(titleType: "문의", content:"실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?")]),
-        RxDataModel(headerTitle: "table", items:
-                        [CommuityDataModel(titleType: "문의", content:"실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?")]),
-        RxDataModel(headerTitle: "table", items:
-                        [CommuityDataModel(titleType: "문의", content:"실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?")]),
-        RxDataModel(headerTitle: "table", items:
-                        [CommuityDataModel(titleType: "문의", content:"실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?")]),
-        RxDataModel(headerTitle: "table", items:
-                        [CommuityDataModel(titleType: "문의", content:"실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?")])
-    ]
-    
-    func fetch() -> Observable<[RxDataModel]> {
-        return Observable.create{ emiter in
-        
-            emiter.onNext(DataStoreFetable.dummyCommunityModel)
-        
-            return Disposables.create()
-            
-        }
-    }
-}
-
-//CommunitySection(model: "test",
-//                          items: [RxDataModel(headerTitle: "message",
-//                                              items: data)])
-
+import RxDataSources
+import RxCocoa
 
 protocol RxViewModelType {
-    var fetchListDataModel: AnyObserver<Void> { get }
+    var fetchRecommendCollectionData: AnyObserver<Void> { get }
+//    var fetchTableData: AnyObserver<Void> { get }
     
-    var allContents: Observable<[CommunitySection]> { get }
+    var recommendCollectionViewContents: Observable<[RxDataSection]> { get }
+//    var talbleViewContents: Observable<[RxDataSection]> { get }
 }
 
 
@@ -59,46 +23,62 @@ final class RxViewModel: RxViewModelType{
     
     let disposeBag = DisposeBag()
     
-    var fetchListDataModel: AnyObserver<Void>
+    var fetchRecommendCollectionData: AnyObserver<Void>
     
     
-    var allContents: Observable<[CommunitySection]>
+    var recommendCollectionViewContents: Observable<[RxDataSection]>
+    
+//    var fetchTableData: AnyObserver<Void>
+//    var talbleViewContents: Observable<[RxDataSection]>
     
     
     init(_ domain: DataStoreSendType = DataStoreFetable()){
         
-        let fetching = PublishSubject<Void>()
-        
-        let communityContents = BehaviorSubject<[CommunitySection]>(value: [])
+        let fetchingRecommend = PublishSubject<Void>()
         
         
-        fetchListDataModel = fetching.asObserver()
+        let communityRecommendContents = BehaviorSubject<[RxDataSection]>(value: [])
         
-        fetching
-            .flatMap(domain.fetch)
-            .map{rxDataModels in
-                var section: [CommunitySection] = []
+        
+        // collectionView Recommend Setting
+        fetchRecommendCollectionData = fetchingRecommend.asObserver()
+        
+        fetchingRecommend
+        //        Observable<[RxData]>
+            .flatMap(domain.collectionFetch)
+            .map{rxRecommendData in
                 
-                var typeOnemodels: [RxDataModel] = []
-                var typeTwomodels: [RxDataModel] = []
+                var section: [RxDataSection] = []
                 
-                rxDataModels.forEach{ model in
-                    if model.headerTitle == "collection"{
-                        typeOnemodels.append(model)
-                    }else{
-                        typeTwomodels.append(model)
-                    }
-                }
-                section.append(CommunitySection(model: "firstSection", items: typeOnemodels))
-                section.append(CommunitySection(model: "secondSection", items: typeTwomodels))
+                section.append(RxDataSection(model: "firstSection", items: rxRecommendData))
                 
                 return section
             }
-            .subscribe(onNext: communityContents.onNext(_:))
+            .subscribe(onNext: communityRecommendContents.onNext(_:))
             .disposed(by: disposeBag)
+        recommendCollectionViewContents = communityRecommendContents
         
-        allContents = communityContents
-        
+        //
+        //        let fetchingTable = PublishSubject<Void>()
+        //        let communityTaebleContents = BehaviorSubject<[RxDataSection]>(value: [])
+        //
+        //        recommendCollectionViewContents = communityRecommendContents
+        //
+        //        fetchTableData = fetchingTable.asObserver()
+        //
+        //        fetchingTable
+        //            .flatMap(domain.tableFetch)
+        //            .map{rxTableData in
+        //                var section: [RxDataSection] = []
+        //
+        //                section.append(RxDataSection(model: "secondSection", items: rxTableData))
+        //
+        //                return section
+        //            }
+        //            .subscribe(onNext: communityTaebleContents.onNext )
+        //            .disposed(by: disposeBag)
+        //
+        //        talbleViewContents = communityTaebleContents
     }
     
 }

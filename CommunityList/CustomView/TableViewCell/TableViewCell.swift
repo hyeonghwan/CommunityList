@@ -20,7 +20,7 @@ final class TableViewCell: UITableViewCell {
         return label
     }()
     
-    var onData: AnyObserver<RxDataModel>
+    var onData: AnyObserver<RxData>
     
     var onIndexPath: AnyObserver<IndexPath>
     
@@ -29,7 +29,7 @@ final class TableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         
-        let subject = PublishSubject<RxDataModel>()
+        let subject = PublishSubject<RxData>()
         
         let indexPathSubject = PublishSubject<IndexPath>()
         
@@ -41,15 +41,15 @@ final class TableViewCell: UITableViewCell {
         
         subject
             .observe(on: MainScheduler.instance)
-            .map{data in return data}
-            .subscribe(onNext: { data in
+            .map{data in return data.items}
+            .subscribe(onNext: { items in
                 
-//                self.label.text = data.con
+                guard let item = items.first as? CommunityTableModel else { return }
+            
+                self.label.text = item.communityData.content
             })
             .disposed(by: disposeBag)
     
-            
-        
         configure()
     }
 
@@ -57,7 +57,14 @@ final class TableViewCell: UITableViewCell {
         fatalError("required init fatalError")
         
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.contentView.frame = self.contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+    }
+    
     func configure() {
+        self.contentView.backgroundColor = UIColor.orange
         
         self.contentView.addSubview(label)
         

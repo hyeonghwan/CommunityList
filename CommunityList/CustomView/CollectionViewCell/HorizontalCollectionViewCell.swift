@@ -68,13 +68,13 @@ class HorizontalCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    var onCollectionData: AnyObserver<CommuityDataModel>
+    var onCollectionData: AnyObserver<MultipleSectionModel>
     
     var disposeBag = DisposeBag()
     
     override init(frame: CGRect) {
         
-        let subject = PublishSubject<CommuityDataModel>()
+        let subject = PublishSubject<MultipleSectionModel>()
         
         onCollectionData = subject.asObserver()
         
@@ -84,12 +84,22 @@ class HorizontalCollectionViewCell: UICollectionViewCell {
         
         subject
             .observe(on: MainScheduler.instance)
-            .bind(onNext: { [weak self] communityModel in
+            .bind(onNext: { [weak self] model in
+                
                 guard let self = self else { return }
-                self.requestNameType.text = communityModel.titleType
-                self.requestContent.text = communityModel.content
-                self.heartCount.text = communityModel.heartCount
-                self.commentCount.text = communityModel.commentCount
+                
+                switch model{
+                    
+                case let .collectionItem(data):
+                    
+                    self.requestNameType.text = data.communityData.headerTitleType
+                    self.requestContent.text = data.communityData.content
+                    self.heartCount.text = data.communityData.heartCount
+                    self.commentCount.text = data.communityData.commentCount
+                    
+                default:
+                    break
+                }
             })
             .disposed(by: disposeBag)
         

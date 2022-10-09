@@ -42,15 +42,16 @@ class ViewController: UIViewController {
         case table = 1
     }
     
-    var tableDataSource = RxTableViewSectionedReloadDataSource<CommunitySection>(configureCell: {
+    var tableDataSource = RxTableViewSectionedReloadDataSource<RxDataSection>(configureCell: {
         dataSource, tableView, indexPath, item in
-    
+        
         let section = TableViewSectionType(rawValue: indexPath.section)
+        
+        
         
         switch section{
         case .collection:
             guard let collectionViewcell = tableView.dequeueReusableCell(withIdentifier: HorizonTalTableSectionCell.identify, for: indexPath) as? HorizonTalTableSectionCell else { return UITableViewCell() }
-            
             collectionViewcell.onData.onNext(item)
             
             return collectionViewcell
@@ -58,15 +59,12 @@ class ViewController: UIViewController {
         case .table:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identify, for: indexPath)
                     as? TableViewCell else {return UITableViewCell()}
-            
+            print(item)
             cell.onData.onNext(item)
             return cell
         default:
             assert(false,"error")
         }
-        
-        
-        // item == [rxDataModel]
     })
     
     init(_ viewModel: RxViewModelType = RxViewModel() ){
@@ -94,7 +92,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        viewModel.fetchListDataModel.onNext(())
+        viewModel.fetchRecommendCollectionData.onNext(())
+//        viewModel.fetchTableData.onNext(())
         
         self.containerTableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
@@ -104,9 +103,16 @@ class ViewController: UIViewController {
     
  
     func setUpBinding() {
-        viewModel.allContents
+        
+        viewModel.recommendCollectionViewContents
+            .map{data in data}
             .bind(to: containerTableView.rx.items(dataSource: tableDataSource))
             .disposed(by: disposeBag)
+        
+//        viewModel.talbleViewContents
+//            .bind(to: containerTableView.rx.items(dataSource: tableDataSource))
+//            .disposed(by: disposeBag)
+
     }
 }
 
@@ -115,7 +121,9 @@ extension ViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section{
         case 0:
-            return CGFloat(300)
+            return CGFloat(200)
+        case 1:
+            return CGFloat(237)
         default:
             return .leastNormalMagnitude
         }
