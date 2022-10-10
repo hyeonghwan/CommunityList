@@ -11,9 +11,11 @@ import RxDataSources
 // table
 struct CommunityTableModel: CommunityIdentiable{
     var communityData: CommunityContainer
-    var image: String = ""
-    var timeWhenWrite: String = ""
-    var tag: String = ""
+    var title: String = "천장도배"
+    var image: String = "contentImage"
+    var tag: String = "#도배"
+    var timeWhenWrite: String = "방금전"
+    
 }
 
 extension CommunityTableModel: Equatable{}

@@ -17,7 +17,6 @@ class HeartButton: UIButton {
             self.setBackgroundImage(UIImage(named: "heart.fill"), for: .normal)
             :
             self.setBackgroundImage(UIImage(named: "heart"), for: .normal)
-            
         }
     }
     

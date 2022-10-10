@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 import SnapKit
-
+import RxSwift
 
 struct CategoryButtonAndLabel {
     let categoryButton: CategoryRoundedButton
@@ -17,7 +17,7 @@ struct CategoryButtonAndLabel {
 
 class CategoryCombineWithLabelContainerView: UIView{
     
-    let categories: [String] = ["전체", "문의", "가격","전문가검색", "의뢰하기", "기타문의","전체", "문의", "가격","전문가검색", "의뢰하기", "기타문의"]
+    let categories: [RequestType] = [.all , .ask, .price, .expertSearching, .request , .etc]
     
     private lazy var scrollView: UIScrollView = {
        let scrollView = UIScrollView()
@@ -37,14 +37,42 @@ class CategoryCombineWithLabelContainerView: UIView{
     private lazy var categoryButtonItems: [CategoryButtonAndLabel] = {
         let frame: CGRect = .zero
     
-        var items: [CategoryButtonAndLabel] = []
+        let firstButton = CategoryRoundedButton(frame: .zero)
         
-        categories.forEach{ name in
-            items.append(CategoryButtonAndLabel(categoryButton: CategoryRoundedButton(frame: .zero), categoryLabel: CategoryLabel(frame: .zero, name: name)))
+        firstButton.isSelected = true
+        
+        firstButton.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
+        
+        let firstLabel = CategoryLabel(frame: .zero, requestType: .all)
+        
+        firstLabel.buttonfocused = true
+        
+        var items: [CategoryButtonAndLabel] = [CategoryButtonAndLabel(categoryButton: firstButton,
+                                                                      categoryLabel: firstLabel)]
+        
+        categories.forEach{ requestType in
+            let button = CategoryRoundedButton(frame: .zero)
+            button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
+            items.append(CategoryButtonAndLabel(categoryButton: button,
+                                                categoryLabel: CategoryLabel(frame: .zero, requestType: requestType)))
         }
         
         return items
     }()
+    
+    @objc func buttonTapped(_ sender: CategoryRoundedButton){
+        print("tapped")
+        if sender.isSelected == false {
+            categoryButtonItems
+                .forEach{data in
+                data.categoryButton.isSelected = false
+                data.categoryLabel.buttonfocused = false
+            }
+            sender.isSelected = true
+            
+        }
+        
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

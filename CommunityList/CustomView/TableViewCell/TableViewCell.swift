@@ -12,12 +12,11 @@ import RxSwift
 import RxCocoa
 
 final class TableViewCell: UITableViewCell {
-    
-    private lazy var label: UILabel = {
-        let label = UILabel()
-        label.text = "test"
-        label.font = UIFont.boldSystemFont(ofSize: 16)
-        return label
+
+    private lazy var customView: CustomViewInTBCell = {
+        let view = CustomViewInTBCell()
+        
+        return view
     }()
     
     var onData: AnyObserver<RxData>
@@ -40,13 +39,15 @@ final class TableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         subject
-            .observe(on: MainScheduler.instance)
-            .map{data in return data.items}
-            .subscribe(onNext: { items in
-                
-                guard let item = items.first as? CommunityTableModel else { return }
-            
-                self.label.text = item.communityData.content
+            .map{rxData in rxData.items.first!}
+            .subscribe(onNext: { [weak self] data in
+                guard let self = self else { return }
+                switch data {
+                case let .tableItem(item):
+                    self.customView.customViewObserver.onNext(item)
+                default:
+                    break
+                }
             })
             .disposed(by: disposeBag)
     
@@ -58,19 +59,19 @@ final class TableViewCell: UITableViewCell {
         
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.contentView.frame = self.contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
-    }
-    
     func configure() {
-        self.contentView.backgroundColor = UIColor.orange
+        self.backgroundColor = .tertiarySystemBackground
         
-        self.contentView.addSubview(label)
+        self.contentView.addSubview(customView)
+       
         
-        label.snp.makeConstraints{
-            $0.leading.trailing.bottom.top.equalToSuperview()
+        customView.snp.makeConstraints{
+            $0.edges.equalToSuperview()
         }
+        
+                
+        
+        
     }
 
 }

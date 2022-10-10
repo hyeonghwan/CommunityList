@@ -13,7 +13,7 @@ protocol CommunityIdentiable {
 }
 
 struct CommunityContainer {
-    var headerTitleType: String
+    var headerTitleType: RequestType
     var content: String
     var heartCount: String = "1.4k"
     var commentCount: String = "1k"

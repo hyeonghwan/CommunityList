@@ -26,6 +26,8 @@ class ViewController: UIViewController {
         
         let tableview = UITableView(frame: .zero, style: .grouped)
         
+        tableview.allowsSelection = false
+        
         tableview.backgroundColor = .tertiarySystemBackground
         
         tableview.separatorStyle = .none
@@ -47,21 +49,24 @@ class ViewController: UIViewController {
         
         let section = TableViewSectionType(rawValue: indexPath.section)
         
-        
-        
         switch section{
+            
         case .collection:
             guard let collectionViewcell = tableView.dequeueReusableCell(withIdentifier: HorizonTalTableSectionCell.identify, for: indexPath) as? HorizonTalTableSectionCell else { return UITableViewCell() }
+            
             collectionViewcell.onData.onNext(item)
             
             return collectionViewcell
             
+            
         case .table:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identify, for: indexPath)
                     as? TableViewCell else {return UITableViewCell()}
-            print(item)
+    
             cell.onData.onNext(item)
+            
             return cell
+            
         default:
             assert(false,"error")
         }
@@ -70,8 +75,6 @@ class ViewController: UIViewController {
     init(_ viewModel: RxViewModelType = RxViewModel() ){
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        
-        
     }
     
     required init?(coder: NSCoder) {
@@ -81,8 +84,7 @@ class ViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
-       
-     
+    
         settingNavigation()
         configureAddContentLayout()
         configureEndEditing()
@@ -92,8 +94,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        viewModel.fetchRecommendCollectionData.onNext(())
-//        viewModel.fetchTableData.onNext(())
+        viewModel.fetchRecommendCollectionData.onNext((.all))
+        viewModel.fetchTableData.onNext((.all))
         
         self.containerTableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
@@ -103,16 +105,23 @@ class ViewController: UIViewController {
     
  
     func setUpBinding() {
+
+        let collection = BehaviorSubject<[RxDataSection]>(value: [])
+        let table = BehaviorSubject<[RxDataSection]>(value: [])
         
         viewModel.recommendCollectionViewContents
-            .map{data in data}
-            .bind(to: containerTableView.rx.items(dataSource: tableDataSource))
+            .subscribe(onNext: collection.onNext(_:))
             .disposed(by: disposeBag)
         
-//        viewModel.talbleViewContents
-//            .bind(to: containerTableView.rx.items(dataSource: tableDataSource))
-//            .disposed(by: disposeBag)
-
+        viewModel.talbleViewContents
+            .subscribe(onNext: table.onNext(_:))
+            .disposed(by: disposeBag)
+        
+        Observable.combineLatest(collection, table, resultSelector: { collection, table in
+            collection + table
+        })
+            .bind(to: self.containerTableView.rx.items(dataSource: tableDataSource))
+            .disposed(by: disposeBag)
     }
 }
 
@@ -123,7 +132,7 @@ extension ViewController: UITableViewDelegate{
         case 0:
             return CGFloat(200)
         case 1:
-            return CGFloat(237)
+            return CGFloat(250)
         default:
             return .leastNormalMagnitude
         }
@@ -140,6 +149,7 @@ extension ViewController: UITableViewDelegate{
         }
     }
 }
+
 
 
 

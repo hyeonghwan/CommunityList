@@ -13,15 +13,8 @@ import RxSwift
 
 class HorizontalCollectionViewCell: UICollectionViewCell {
     
-    private var heart: Bool? {
-        didSet{
-            heartButton.isSelect = self.heart!
-        }
-    }
-    
     private lazy var requestNameType: UILabel = {
         let label = UILabel()
-        
         label.textColor = UIColor(red: 0.425, green: 0.391, blue: 0.391, alpha: 1)
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
@@ -36,37 +29,11 @@ class HorizontalCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private lazy var heartButton: HeartButton = {
-        let button = HeartButton()
-        self.heart == true ?
-        button.setBackgroundImage(UIImage(named: "heart.fill"), for: .normal)
-        :
-        button.setBackgroundImage(UIImage(named: "heart"), for: .normal)
-        return button
+    private lazy var actionHCView: ActionHCView = {
+        let view = ActionHCView()
+        return view
     }()
-    
-    private lazy var heartCount: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor(red: 0.779, green: 0.779, blue: 0.779, alpha: 1)
-        label.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
-        return label
-    }()
-    
-    private lazy var commentButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .clear
-        button.clipsToBounds = true
-        button.contentMode = .scaleAspectFill
-        button.setBackgroundImage(UIImage(named: "buble"), for: .normal)
-        return button
-    }()
-    
-    private lazy var commentCount: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor(red: 0.779, green: 0.779, blue: 0.779, alpha: 1)
-        label.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
-        return label
-    }()
+   
     
     var onCollectionData: AnyObserver<MultipleSectionModel>
     
@@ -92,10 +59,10 @@ class HorizontalCollectionViewCell: UICollectionViewCell {
                     
                 case let .collectionItem(data):
                     
-                    self.requestNameType.text = data.communityData.headerTitleType
+                    self.requestNameType.text = data.communityData.headerTitleType.rawValue
                     self.requestContent.text = data.communityData.content
-                    self.heartCount.text = data.communityData.heartCount
-                    self.commentCount.text = data.communityData.commentCount
+                    self.actionHCView.updateUI(heartCount: data.communityData.heartCount,
+                                               commentCount: data.communityData.commentCount)
                     
                 default:
                     break
@@ -105,10 +72,13 @@ class HorizontalCollectionViewCell: UICollectionViewCell {
         
     }
     
+    
+    
     required init?(coder: NSCoder) {
         fatalError("required init fatalError")
         
     }
+    
 }
 
 extension HorizontalCollectionViewCell{
@@ -118,7 +88,7 @@ extension HorizontalCollectionViewCell{
         
         self.contentView.layer.cornerRadius = 14
         
-        [requestNameType,requestContent,heartButton,heartCount,commentButton,commentCount].forEach{
+        [requestNameType,requestContent,actionHCView].forEach{
             self.contentView.addSubview($0)
         }
         
@@ -132,26 +102,11 @@ extension HorizontalCollectionViewCell{
             $0.leading.trailing.equalToSuperview().inset(16)
         }
         
-        heartButton.snp.makeConstraints{
-            $0.top.equalTo(requestContent.snp.bottom).offset(18)
-            $0.leading.equalToSuperview().inset(16)
-            $0.width.height.equalTo(15)
+        actionHCView.snp.makeConstraints{
+            $0.top.equalTo(requestContent.snp.bottom).offset(30)
+            $0.bottom.equalToSuperview().inset(16)
+            $0.leading.equalToSuperview().inset(17)
         }
         
-        heartCount.snp.makeConstraints{
-            $0.leading.equalTo(heartButton.snp.trailing).offset(6)
-            $0.top.equalTo(heartButton.snp.top)
-        }
-        
-        commentButton.snp.makeConstraints{
-            $0.width.height.equalTo(15)
-            $0.top.equalTo(requestContent.snp.bottom).offset(18)
-            $0.leading.equalTo(heartCount.snp.trailing).offset(15)
-        }
-        
-        commentCount.snp.makeConstraints{
-            $0.leading.equalTo(commentButton.snp.trailing).offset(6)
-            $0.top.equalTo(commentButton.snp.top)
-        }
     }
 }

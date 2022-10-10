@@ -32,6 +32,7 @@ extension RxData: AnimatableSectionModelType {
     var identity: String {
         return headerTitle
     }
+
     
     init(original: RxData, items: [Item]) {
         self = original
