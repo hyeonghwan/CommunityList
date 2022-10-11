@@ -18,7 +18,7 @@ protocol RxViewModelType {
     var fetchTableData: AnyObserver<RequestType> { get }
     
     var recommendCollectionViewContents: Observable<[RxDataSection]> { get }
-    var talbleViewContents: Observable<[RxDataSection]> { get }
+    var tableViewContents: Observable<[RxDataSection]> { get }
     
     
     var allContent: Observable<[RxDataSection]> { get }
@@ -29,14 +29,16 @@ final class RxViewModel: RxViewModelType{
     
     let disposeBag = DisposeBag()
     
+    
     var fetchRecommendCollectionData: AnyObserver<RequestType>
-    
-    
+
     var recommendCollectionViewContents: Observable<[RxDataSection]>
+
     
     var fetchTableData: AnyObserver<RequestType>
     
-    var talbleViewContents: Observable<[RxDataSection]>
+    var tableViewContents: Observable<[RxDataSection]>
+    
     
     var allContent: Observable<[RxDataSection]>
     
@@ -77,7 +79,7 @@ final class RxViewModel: RxViewModelType{
             .subscribe(onNext: communityTaebleContents.onNext )
             .disposed(by: disposeBag)
         
-        talbleViewContents = communityTaebleContents
+        tableViewContents = communityTaebleContents
         
     
         allContent = allDataSuject

@@ -34,6 +34,14 @@ final class CategoryRoundedButton: UIButton{
         fatalError("required init fatal error!")
     }
     
+    func getButtonType() -> RequestType{
+        if self.buttonRequestType != nil {
+            return self.buttonRequestType!
+        }
+        debugPrint("getButtonTypeError occur!")
+        return RequestType.all
+    }
+    
     
     
 }

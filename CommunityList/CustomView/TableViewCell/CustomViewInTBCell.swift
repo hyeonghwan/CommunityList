@@ -22,7 +22,7 @@ class CustomViewInTBCell: UIView{
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(red: 0.169, green: 0.169, blue: 0.169, alpha: 1)
+        label.textColor = .label
         label.font = UIFont.boldSystemFont(ofSize: 14)
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 3
@@ -31,7 +31,7 @@ class CustomViewInTBCell: UIView{
     
     private lazy var contentLable: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(red: 0.425, green: 0.391, blue: 0.391, alpha: 1)
+        label.textColor = .label
         label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 3
@@ -61,6 +61,20 @@ class CustomViewInTBCell: UIView{
         label.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
         return label
     }()
+    
+    private lazy var timeLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(red: 0.779, green: 0.779, blue: 0.779, alpha: 1)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        return label
+    }()
+    
+    private lazy var separatorLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray4
+        return view
+    }()
+    
     
     private lazy var actionView: ActionHCView = {
         let label = ActionHCView()
@@ -109,9 +123,14 @@ class CustomViewInTBCell: UIView{
             .disposed(by: disposeBag)
         
         
-        
+        transferData
+            .map{data in return data.timeWhenWrite }
+            .bind(to: timeLabel.rx.text)
+            .disposed(by: disposeBag)
+    
         layoutConfigure()
     }
+
     required init?(coder: NSCoder) {
         fatalError("required init fatalError")
         
@@ -120,7 +139,7 @@ class CustomViewInTBCell: UIView{
 }
 private extension CustomViewInTBCell {
     func layoutConfigure() {
-        [stackView,imageView,tagLabel,actionView].forEach{
+        [stackView,imageView,tagLabel,actionView,timeLabel,separatorLine].forEach{
             self.addSubview($0)
         }
         [headerTypeLabel,titleLabel,contentLable].forEach{
@@ -147,10 +166,20 @@ private extension CustomViewInTBCell {
         
         actionView.snp.makeConstraints{
             $0.top.equalTo(tagLabel.snp.bottom).offset(24)
-            $0.leading.equalToSuperview()
+            $0.height.equalTo(30)
+            $0.leading.equalToSuperview().inset(16)
             $0.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(23)
         }
+        timeLabel.snp.makeConstraints{
+            $0.bottom.equalTo(separatorLine.snp.top).offset(-20)
+            $0.trailing.equalToSuperview().inset(21)
+        }
+        separatorLine.snp.makeConstraints{
+            $0.top.equalTo(actionView.snp.bottom).offset(10)
+            $0.height.equalTo(2)
+            $0.leading.trailing.equalToSuperview()
+        }
+
         
         
         

@@ -25,21 +25,26 @@ class HorizontalCollectionViewCell: UICollectionViewCell {
         label.textColor = UIColor(red: 0.169, green: 0.169, blue: 0.169, alpha: 1)
         label.font = UIFont.boldSystemFont(ofSize: 14)
         label.lineBreakMode = .byWordWrapping
-        label.numberOfLines = 3
+        label.contentMode = .topLeft
+        label.numberOfLines = 0
         return label
     }()
     
     private lazy var actionHCView: ActionHCView = {
-        let view = ActionHCView()
+        let view = ActionHCView(frame: .zero)
         return view
     }()
-   
     
     var onCollectionData: AnyObserver<MultipleSectionModel>
     
     var disposeBag = DisposeBag()
     
+    override func layoutSubviews() {
+        requestContent.sizeToFit()
+    }
+    
     override init(frame: CGRect) {
+        
         
         let subject = PublishSubject<MultipleSectionModel>()
         
@@ -48,7 +53,7 @@ class HorizontalCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         
         layoutconfigure()
-        
+
         subject
             .observe(on: MainScheduler.instance)
             .bind(onNext: { [weak self] model in
@@ -73,7 +78,6 @@ class HorizontalCollectionViewCell: UICollectionViewCell {
     }
     
     
-    
     required init?(coder: NSCoder) {
         fatalError("required init fatalError")
         
@@ -84,7 +88,8 @@ class HorizontalCollectionViewCell: UICollectionViewCell {
 extension HorizontalCollectionViewCell{
     private func layoutconfigure() {
         
-        self.contentView.layer.backgroundColor = UIColor(red: 0.967, green: 0.967, blue: 0.967, alpha: 1).cgColor
+        
+        self.contentView.backgroundColor = UIColor(red: 0.967, green: 0.967, blue: 0.967, alpha: 1)
         
         self.contentView.layer.cornerRadius = 14
         
@@ -95,17 +100,25 @@ extension HorizontalCollectionViewCell{
         requestNameType.snp.makeConstraints{
             $0.top.equalToSuperview().inset(20)
             $0.leading.equalToSuperview().inset(16)
+            $0.trailing.greaterThanOrEqualToSuperview()
         }
+        self.requestNameType.setContentHuggingPriority(.defaultHigh, for: .vertical)
         
         requestContent.snp.makeConstraints{
             $0.top.equalTo(requestNameType.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(16)
         }
         
+        self.actionHCView.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        
         actionHCView.snp.makeConstraints{
-            $0.top.equalTo(requestContent.snp.bottom).offset(30)
-            $0.bottom.equalToSuperview().inset(16)
-            $0.leading.equalToSuperview().inset(17)
+            // check
+            $0.height.equalTo(25)
+//            $0.top.greaterThanOrEqualTo(requestContent.snp.bottom).offset(16)
+            $0.top.equalTo(requestContent.snp.bottom).offset(16)
+            $0.leading.equalToSuperview().inset(16)
+            $0.trailing.greaterThanOrEqualToSuperview().inset(16)
+            $0.bottom.equalToSuperview().inset(20)
         }
         
     }

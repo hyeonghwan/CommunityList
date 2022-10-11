@@ -16,11 +16,7 @@ class ViewController: UIViewController {
     private var viewModel: RxViewModelType
     
     private var disposeBag = DisposeBag()
-    
-    private lazy var headerView: TableViewSectionHeader = {
-        let view = TableViewSectionHeader()
-        return view
-    }()
+
     
     lazy var containerTableView: UITableView = {
         
@@ -37,6 +33,14 @@ class ViewController: UIViewController {
         tableview.register(HorizonTalTableSectionCell.self, forCellReuseIdentifier: HorizonTalTableSectionCell.identify)
 
        return tableview
+    }()
+    
+    
+    private lazy var sectionHeader: TableViewSectionHeader = {
+    
+        let view = TableViewSectionHeader(frame: .zero)
+        
+        return view
     }()
     
     enum TableViewSectionType: Int{
@@ -113,14 +117,26 @@ class ViewController: UIViewController {
             .subscribe(onNext: collection.onNext(_:))
             .disposed(by: disposeBag)
         
-        viewModel.talbleViewContents
+        viewModel.tableViewContents
             .subscribe(onNext: table.onNext(_:))
             .disposed(by: disposeBag)
         
         Observable.combineLatest(collection, table, resultSelector: { collection, table in
             collection + table
-        })
+        }).map{data in  print("combineLatest -> \(data)"); return data}
             .bind(to: self.containerTableView.rx.items(dataSource: tableDataSource))
+            .disposed(by: disposeBag)
+        
+        sectionHeader
+            .categorySegemts
+            .getObservableRequestType()
+            .subscribe(onNext: viewModel.fetchRecommendCollectionData.onNext(_:))
+            .disposed(by: disposeBag)
+        
+        sectionHeader
+            .categorySegemts
+            .getObservableRequestType()
+            .subscribe(onNext: viewModel.fetchTableData.onNext(_:))
             .disposed(by: disposeBag)
     }
 }
@@ -142,10 +158,19 @@ extension ViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView?{
         switch section{
         case 0:
-            let framez = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 170)
-            return TableViewSectionHeader(frame: framez)
+            return sectionHeader
         default:
             return nil
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section{
+        case 0:
+            return CGFloat(187.7)
+        default:
+            return CGFloat(0)
+            
         }
     }
 }

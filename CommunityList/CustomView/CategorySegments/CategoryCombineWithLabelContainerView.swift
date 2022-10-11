@@ -17,7 +17,11 @@ struct CategoryButtonAndLabel {
 
 class CategoryCombineWithLabelContainerView: UIView{
     
-    let categories: [RequestType] = [.all , .ask, .price, .expertSearching, .request , .etc]
+    let categories: [RequestType] = [ .ask, .price, .expertSearching, .request , .etc]
+    
+    var onChangeRequestType: (RequestType) -> ()
+    
+    let onChanged: Observable<RequestType>
     
     private lazy var scrollView: UIScrollView = {
        let scrollView = UIScrollView()
@@ -37,7 +41,7 @@ class CategoryCombineWithLabelContainerView: UIView{
     private lazy var categoryButtonItems: [CategoryButtonAndLabel] = {
         let frame: CGRect = .zero
     
-        let firstButton = CategoryRoundedButton(frame: .zero)
+        let firstButton = CategoryRoundedButton(frame: .zero, requestType: .all)
         
         firstButton.isSelected = true
         
@@ -51,7 +55,7 @@ class CategoryCombineWithLabelContainerView: UIView{
                                                                       categoryLabel: firstLabel)]
         
         categories.forEach{ requestType in
-            let button = CategoryRoundedButton(frame: .zero)
+            let button = CategoryRoundedButton(frame: .zero, requestType: requestType)
             button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
             items.append(CategoryButtonAndLabel(categoryButton: button,
                                                 categoryLabel: CategoryLabel(frame: .zero, requestType: requestType)))
@@ -69,12 +73,19 @@ class CategoryCombineWithLabelContainerView: UIView{
                 data.categoryLabel.buttonfocused = false
             }
             sender.isSelected = true
-            
+            onChangeRequestType(sender.getButtonType())
         }
         
     }
     
     override init(frame: CGRect) {
+        
+        let changingType = PublishSubject<RequestType>()
+        
+        onChangeRequestType = {type in changingType.onNext(type)  }
+        
+        onChanged = changingType
+        
         super.init(frame: frame)
         configure()
     }

@@ -49,7 +49,7 @@ class TableViewSectionHeader: UIView {
             $0.top.equalTo(searchBar.snp.bottom).offset(16)
             $0.height.equalTo(95)
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
+//            $0.bottom.equalToSuperview()
         }
         
     }

@@ -77,9 +77,11 @@ class DataStoreFetable: DataStoreSendType{
                 }
                 
             case .ask,.request,.expertSearching,.price,.etc:
-                tableModels = self.allCommunityDataList.map{containerData in
+                tableModels = self.allCommunityDataList
+                    .filter{ $0.headerTitleType == requestType}
+                    .map{filteredData in
                     return RxData(headerTitle: HeaderType.table.rawValue,
-                                  items: [MultipleSectionModel.tableItem(CommunityTableModel(communityData: containerData))])
+                                  items: [MultipleSectionModel.tableItem(CommunityTableModel(communityData: filteredData))])
                 }
             }
             

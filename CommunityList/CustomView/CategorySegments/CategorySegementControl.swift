@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import RxSwift
 
 class CategorySegmentControl: UIView{
     
@@ -19,17 +20,22 @@ class CategorySegmentControl: UIView{
         super.init(frame: frame)
         configue()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("required init fatalError")
         
     }
     
+    func getObservableRequestType() -> Observable<RequestType> {
+        return self.containerView.onChanged
+    }
     
+//    CategoryCombineWithLabelContainerView's top edge should equal CategorySegmentControl's top edge plus 5.
     private func configue() {
         self.addSubview(containerView)
         
         containerView.snp.makeConstraints{
-            $0.top.equalToSuperview().inset(5)
+            $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(12)
             $0.bottom.equalToSuperview()
         }
