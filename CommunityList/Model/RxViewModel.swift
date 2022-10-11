@@ -12,16 +12,12 @@ import RxCocoa
 
 protocol RxViewModelType {
     
-    
-    
     var fetchRecommendCollectionData: AnyObserver<RequestType> { get }
     var fetchTableData: AnyObserver<RequestType> { get }
     
     var recommendCollectionViewContents: Observable<[RxDataSection]> { get }
     var tableViewContents: Observable<[RxDataSection]> { get }
     
-    
-    var allContent: Observable<[RxDataSection]> { get }
 }
 
 
@@ -40,16 +36,12 @@ final class RxViewModel: RxViewModelType{
     var tableViewContents: Observable<[RxDataSection]>
     
     
-    var allContent: Observable<[RxDataSection]>
-    
-    
     init(_ domain: DataStoreSendType = DataStoreFetable()){
         
         let fetchingRecommend = PublishSubject<RequestType>()
         
         let communityRecommendContents = BehaviorSubject<[RxDataSection]>(value: [])
-        
-        let allDataSuject = BehaviorSubject<[RxDataSection]>(value: [])
+
         
         // collectionView Recommend Setting
         fetchRecommendCollectionData = fetchingRecommend.asObserver()
@@ -80,9 +72,6 @@ final class RxViewModel: RxViewModelType{
             .disposed(by: disposeBag)
         
         tableViewContents = communityTaebleContents
-        
-    
-        allContent = allDataSuject
         
     }
     

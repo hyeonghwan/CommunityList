@@ -13,6 +13,11 @@ import RxSwift
 
 class HorizonTalTableSectionCell: UITableViewCell{
     
+    lazy var headerView: HorizontalCollectionHeaderView = {
+        let view = HorizontalCollectionHeaderView()
+        return view
+    }()
+    
     lazy var horizontalCollectionView: UICollectionView = {
         
         let view = UICollectionView.settingCollectionView()
@@ -41,7 +46,6 @@ class HorizonTalTableSectionCell: UITableViewCell{
                 indexPath, item, cell in
                 
                 cell.onCollectionData.onNext(item)
-                
             }
             .disposed(by: disposeBag)
         
@@ -51,12 +55,21 @@ class HorizonTalTableSectionCell: UITableViewCell{
         
     }
     private func layoutconfigure() {
-        
+        self.contentView.addSubview(headerView)
         self.contentView.addSubview(horizontalCollectionView)
         
+        headerView.snp.makeConstraints{
+            $0.top.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+        }
+        
         horizontalCollectionView.snp.makeConstraints{
-            $0.edges.equalToSuperview()
+            $0.top.equalTo(headerView.snp.bottom).offset(7)
+            $0.leading.trailing.bottom.equalToSuperview()
             
         }
     }
 }
+
+

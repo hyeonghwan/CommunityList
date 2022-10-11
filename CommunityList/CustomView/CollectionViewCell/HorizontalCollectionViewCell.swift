@@ -38,10 +38,7 @@ class HorizontalCollectionViewCell: UICollectionViewCell {
     var onCollectionData: AnyObserver<MultipleSectionModel>
     
     var disposeBag = DisposeBag()
-    
-    override func layoutSubviews() {
-        requestContent.sizeToFit()
-    }
+
     
     override init(frame: CGRect) {
         

@@ -33,6 +33,7 @@
 		968830A928F29F780036705E /* file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968830A828F29F780036705E /* file.swift */; };
 		968830AB28F2C3800036705E /* CommunityTableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968830AA28F2C3800036705E /* CommunityTableModel.swift */; };
 		968830B028F2DF510036705E /* RxData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968830AF28F2DF510036705E /* RxData.swift */; };
+		968CA1EF28F5C3BE008EA35E /* HorizontalCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968CA1EE28F5C3BE008EA35E /* HorizontalCollectionHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,7 @@
 		968830A828F29F780036705E /* file.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = file.swift; sourceTree = "<group>"; };
 		968830AA28F2C3800036705E /* CommunityTableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityTableModel.swift; sourceTree = "<group>"; };
 		968830AF28F2DF510036705E /* RxData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxData.swift; sourceTree = "<group>"; };
+		968CA1EE28F5C3BE008EA35E /* HorizontalCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalCollectionHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				965C59B628F4294400A80432 /* ActionHCView.swift */,
+				968830A428F14CCD0036705E /* HeartButton.swift */,
 				968830A328F14CAF0036705E /* TableViewCell */,
 				968830A228F14C9D0036705E /* CollectionViewCell */,
 				9688309928F02FF60036705E /* CategorySegments */,
@@ -155,7 +158,6 @@
 			isa = PBXGroup;
 			children = (
 				968830A028F14B960036705E /* HorizontalCollectionViewCell.swift */,
-				968830A428F14CCD0036705E /* HeartButton.swift */,
 			);
 			path = CollectionViewCell;
 			sourceTree = "<group>";
@@ -167,6 +169,7 @@
 				965C59B428F4285B00A80432 /* CustomViewInTBCell.swift */,
 				9688309A28F031C60036705E /* TableViewSectionHeader.swift */,
 				9688309E28F062100036705E /* HorizonTalTableSectionCell.swift */,
+				968CA1EE28F5C3BE008EA35E /* HorizontalCollectionHeaderView.swift */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 				9688306728EEA6DD0036705E /* AppDelegate.swift in Sources */,
 				9688306928EEA6DD0036705E /* SceneDelegate.swift in Sources */,
 				9688309028EEDEB60036705E /* RxViewModel.swift in Sources */,
+				968CA1EF28F5C3BE008EA35E /* HorizontalCollectionHeaderView.swift in Sources */,
 				9688308B28EED34A0036705E /* CategoryLable.swift in Sources */,
 				9688309528EEE5C10036705E /* TableViewCell.swift in Sources */,
 				965C59B728F4294400A80432 /* ActionHCView.swift in Sources */,

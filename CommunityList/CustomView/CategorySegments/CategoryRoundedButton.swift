@@ -24,9 +24,13 @@ final class CategoryRoundedButton: UIButton{
         configure()
         self.addTarget(self, action: #selector(categorybuttonTapped), for: .touchUpInside)
     }
-    convenience init(frame: CGRect,requestType: RequestType) {
+    convenience init(frame: CGRect,requestType: RequestType, image: String) {
         self.init(frame: frame)
         self.buttonRequestType = requestType
+        
+        self.clipsToBounds = true
+        self.setImage(UIImage(named: image), for: .normal)
+        self.imageView?.contentMode = .scaleAspectFit
     
     }
     
@@ -48,7 +52,6 @@ final class CategoryRoundedButton: UIButton{
 extension CategoryRoundedButton{
     
     func configure() {
-        self.setImage(UIImage(systemName: "xmark.app"), for: .normal)
         self.backgroundColor = .systemGray4
         self.layer.borderColor = UIColor.black.cgColor
         self.layer.cornerRadius = 30

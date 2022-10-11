@@ -30,7 +30,6 @@ class CategorySegmentControl: UIView{
         return self.containerView.onChanged
     }
     
-//    CategoryCombineWithLabelContainerView's top edge should equal CategorySegmentControl's top edge plus 5.
     private func configue() {
         self.addSubview(containerView)
         

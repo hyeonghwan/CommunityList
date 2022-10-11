@@ -13,29 +13,22 @@ import RxCocoa
 
 class ActionHCView: UIView {
     
-    private var heart: Bool? {
-        didSet{
-            heartButton.isSelect = self.heart!
-        }
-    }
-    private lazy var view: UIView = {
+    private lazy var containerView: UIView = {
         let view = UIView()
-        
         return view
     }()
     
-    
-    
     private lazy var heartButton: HeartButton = {
         let button = HeartButton()
-        self.heart == true ?
-        button.setBackgroundImage(UIImage(named: "heart.fill"), for: .normal)
-        :
-        button.setBackgroundImage(UIImage(named: "heart"), for: .normal)
-        
+        button.addTarget(self, action: #selector(tapped(_:)), for: .touchUpInside)
         return button
     }()
     
+    @objc func tapped( _ sender: UIButton ){
+        self.heartButton.isSelect.toggle()
+        let vibrate = UIImpactFeedbackGenerator(style: .light)
+        vibrate.impactOccurred()
+    }
     
     private lazy var heartCount: UILabel = {
         let label = UILabel()
@@ -61,26 +54,28 @@ class ActionHCView: UIView {
     }()
     
     
-    var observer: AnyObserver<(CommunityContainer,String)>
+    var observer: AnyObserver<CommunityContainer>
+    
     let disposeBag = DisposeBag()
     
+    
     override init(frame: CGRect) {
-        let transferData = PublishSubject<(CommunityContainer,String)>()
+        
+        let transferData = PublishSubject<CommunityContainer>()
         
         observer = transferData.asObserver()
         
         super.init(frame: frame)
     
         transferData
-            .map{data,_ in data.heartCount}
+            .map{data in data.heartCount}
             .bind(to: heartCount.rx.text)
             .disposed(by: disposeBag)
         
         transferData
-            .map{data,_ in data.commentCount}
+            .map{data in data.commentCount}
             .bind(to: commentCount.rx.text)
             .disposed(by: disposeBag)
-        
         
         configue()
         
@@ -97,12 +92,16 @@ class ActionHCView: UIView {
     }
     
     func configue() {
-//
-        [view].forEach{
+
+        [containerView].forEach{
             self.addSubview($0)
         }
+        containerView.snp.makeConstraints{
+            $0.edges.equalToSuperview()
+        }
+        
         [heartButton,heartCount,commentButton,commentCount].forEach{
-            view.addSubview($0)
+            self.containerView.addSubview($0)
         }
 
         heartButton.snp.makeConstraints{

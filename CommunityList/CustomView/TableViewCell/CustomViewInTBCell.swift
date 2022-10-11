@@ -33,7 +33,7 @@ class CustomViewInTBCell: UIView{
         let label = UILabel()
         label.textColor = .label
         label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.lineBreakMode = .byWordWrapping
+        label.lineBreakMode = .byTruncatingTail
         label.numberOfLines = 3
         return label
     }()
@@ -74,7 +74,6 @@ class CustomViewInTBCell: UIView{
         view.backgroundColor = .systemGray4
         return view
     }()
-    
     
     private lazy var actionView: ActionHCView = {
         let label = ActionHCView()
@@ -118,7 +117,7 @@ class CustomViewInTBCell: UIView{
             .disposed(by: disposeBag)
         
         transferData
-            .map{data in return (data.communityData , data.timeWhenWrite)}
+            .map{data in return data.communityData }
             .subscribe(onNext: actionView.observer.onNext(_:))
             .disposed(by: disposeBag)
         
@@ -139,6 +138,7 @@ class CustomViewInTBCell: UIView{
 }
 private extension CustomViewInTBCell {
     func layoutConfigure() {
+        
         [stackView,imageView,tagLabel,actionView,timeLabel,separatorLine].forEach{
             self.addSubview($0)
         }
@@ -155,8 +155,9 @@ private extension CustomViewInTBCell {
         stackView.snp.makeConstraints{
             $0.top.equalToSuperview().inset(22)
             $0.leading.equalToSuperview().inset(16)
-            $0.trailing.lessThanOrEqualTo(imageView.snp.leading)
+            $0.trailing.lessThanOrEqualTo(imageView.snp.leading).offset(-16)
         }
+
         
         tagLabel.snp.makeConstraints{
             $0.top.equalTo(stackView.snp.bottom).offset(30)
@@ -170,10 +171,12 @@ private extension CustomViewInTBCell {
             $0.leading.equalToSuperview().inset(16)
             $0.trailing.equalToSuperview()
         }
+        
         timeLabel.snp.makeConstraints{
             $0.bottom.equalTo(separatorLine.snp.top).offset(-20)
             $0.trailing.equalToSuperview().inset(21)
         }
+        
         separatorLine.snp.makeConstraints{
             $0.top.equalTo(actionView.snp.bottom).offset(10)
             $0.height.equalTo(2)

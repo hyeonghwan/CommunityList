@@ -19,8 +19,12 @@ extension IdentifiableProtocol{
 }
 
 extension TableViewCell: IdentifiableProtocol {}
+
 extension HorizonTalTableSectionCell: IdentifiableProtocol {}
+
 extension HorizontalCollectionViewCell: IdentifiableProtocol {}
+
+extension HorizontalCollectionHeaderView: IdentifiableProtocol {}
 
 extension UICollectionView {
     static func settingCollectionView() -> UICollectionView {

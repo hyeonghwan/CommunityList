@@ -41,7 +41,7 @@ class CategoryCombineWithLabelContainerView: UIView{
     private lazy var categoryButtonItems: [CategoryButtonAndLabel] = {
         let frame: CGRect = .zero
     
-        let firstButton = CategoryRoundedButton(frame: .zero, requestType: .all)
+        let firstButton = CategoryRoundedButton(frame: .zero, requestType: .all, image: "category5")
         
         firstButton.isSelected = true
         
@@ -54,8 +54,11 @@ class CategoryCombineWithLabelContainerView: UIView{
         var items: [CategoryButtonAndLabel] = [CategoryButtonAndLabel(categoryButton: firstButton,
                                                                       categoryLabel: firstLabel)]
         
+        //asset
+        var count = 0
         categories.forEach{ requestType in
-            let button = CategoryRoundedButton(frame: .zero, requestType: requestType)
+            count += 1
+            let button = CategoryRoundedButton(frame: .zero, requestType: requestType, image: "category\(count)")
             button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
             items.append(CategoryButtonAndLabel(categoryButton: button,
                                                 categoryLabel: CategoryLabel(frame: .zero, requestType: requestType)))

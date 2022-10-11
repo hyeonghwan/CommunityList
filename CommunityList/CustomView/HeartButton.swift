@@ -12,7 +12,6 @@ class HeartButton: UIButton {
     
     var isSelect: Bool = false{
         didSet{
-            
             isSelect == true ?
             self.setBackgroundImage(UIImage(named: "heart.fill"), for: .normal)
             :

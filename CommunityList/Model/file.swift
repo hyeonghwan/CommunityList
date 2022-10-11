@@ -21,7 +21,7 @@ class File{
     
     static func allRequestDataLoad() -> [CommunityContainer]{
         let data: [CommunityContainer] = [
-            CommunityContainer(headerTitleType: RequestType.ask, content: "실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?"),
+            CommunityContainer(headerTitleType: RequestType.ask, content: "실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?"),
             CommunityContainer(headerTitleType: RequestType.ask, content: "실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?"),
             CommunityContainer(headerTitleType: RequestType.ask, content: "실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?"),
             CommunityContainer(headerTitleType: RequestType.ask, content: "실크벽지 폭이 110 이면 일반인가요? 아니면 광폭인가요?"),
