@@ -35,6 +35,7 @@
 		968830B028F2DF510036705E /* RxData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968830AF28F2DF510036705E /* RxData.swift */; };
 		968CA1EF28F5C3BE008EA35E /* HorizonTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968CA1EE28F5C3BE008EA35E /* HorizonTitleView.swift */; };
 		968CA1F128F5D3BE008EA35E /* Image-ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968CA1F028F5D3BE008EA35E /* Image-ex.swift */; };
+		968CA1F328F681B7008EA35E /* DateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968CA1F228F681B7008EA35E /* DateFormat.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,7 @@
 		968830AF28F2DF510036705E /* RxData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxData.swift; sourceTree = "<group>"; };
 		968CA1EE28F5C3BE008EA35E /* HorizonTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizonTitleView.swift; sourceTree = "<group>"; };
 		968CA1F028F5D3BE008EA35E /* Image-ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image-ex.swift"; sourceTree = "<group>"; };
+		968CA1F228F681B7008EA35E /* DateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormat.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +184,7 @@
 			children = (
 				9688309C28F0386D0036705E /* CommunityIdentiable.swift */,
 				968830AA28F2C3800036705E /* CommunityTableModel.swift */,
+				968CA1F228F681B7008EA35E /* DateFormat.swift */,
 				968830AF28F2DF510036705E /* RxData.swift */,
 			);
 			path = DataStructure;
@@ -289,6 +292,7 @@
 				9688308328EEB0240036705E /* CategoryView.swift in Sources */,
 				968830AB28F2C3800036705E /* CommunityTableModel.swift in Sources */,
 				9688309D28F0386D0036705E /* CommunityIdentiable.swift in Sources */,
+				968CA1F328F681B7008EA35E /* DateFormat.swift in Sources */,
 				968830A928F29F780036705E /* file.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

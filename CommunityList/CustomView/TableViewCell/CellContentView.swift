@@ -13,6 +13,19 @@ import RxSwift
 
 class CellContentView: UIView{
     
+    private lazy var headerContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 0.949, green: 0.949, blue: 0.945, alpha: 1)
+        view.layer.cornerRadius = 3
+        return view
+    }()
+    
+    private lazy var button: UIButton = {
+        let button = UIButton()
+        
+        return button
+    }()
+    
     private lazy var headerTypeLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(red: 0.425, green: 0.391, blue: 0.391, alpha: 1)
@@ -82,7 +95,10 @@ class CellContentView: UIView{
     }()
     
     var customViewObserver: AnyObserver<CommunityTableModel>
+    
     var disposeBag = DisposeBag()
+    
+    var onTimeChanged: (()->())?
     
     override init(frame: CGRect) {
         
@@ -124,9 +140,13 @@ class CellContentView: UIView{
         
         
         transferData
-            .map{data in return data.timeWhenWrite }
+            .map{data in
+                return DateFormat().caluculateTime(data.communityData.timeWhenWrite)
+            }
             .bind(to: timeLabel.rx.text)
             .disposed(by: disposeBag)
+        
+        
     
         layoutConfigure()
         
@@ -144,8 +164,16 @@ private extension CellContentView {
         [stackView,imageView,tagLabel,actionView,timeLabel,separatorLine].forEach{
             self.addSubview($0)
         }
-        [headerTypeLabel,titleLabel,contentLable].forEach{
+        [headerContainerView,titleLabel,contentLable].forEach{
             stackView.addArrangedSubview($0)
+        }
+        
+        headerContainerView.addSubview(headerTypeLabel)
+        
+        headerTypeLabel.snp.makeConstraints{
+            $0.centerX.centerY.equalToSuperview()
+            $0.top.equalToSuperview().inset(2)
+            $0.trailing.equalToSuperview().inset(8)
         }
         
         imageView.snp.makeConstraints{
@@ -155,10 +183,11 @@ private extension CellContentView {
         }
         
         stackView.snp.makeConstraints{
-            $0.top.equalToSuperview().inset(22)
+            $0.top.equalToSuperview().inset(10)
             $0.leading.equalToSuperview().inset(16)
             $0.trailing.lessThanOrEqualTo(imageView.snp.leading).offset(-16)
         }
+        
 
         
         tagLabel.snp.makeConstraints{

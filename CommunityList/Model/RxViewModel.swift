@@ -41,7 +41,6 @@ final class RxViewModel: RxViewModelType{
         let fetchingRecommend = PublishSubject<RequestType>()
         
         let communityRecommendContents = BehaviorSubject<[RxDataSection]>(value: [])
-
         
         // collectionView Recommend Setting
         fetchRecommendCollectionData = fetchingRecommend.asObserver()

@@ -21,8 +21,6 @@ final class TableViewCell: UITableViewCell {
     
     var onData: AnyObserver<RxData>
     
-    var onIndexPath: AnyObserver<IndexPath>
-    
     var disposeBag = DisposeBag()
     
     
@@ -30,11 +28,7 @@ final class TableViewCell: UITableViewCell {
         
         let subject = PublishSubject<RxData>()
         
-        let indexPathSubject = PublishSubject<IndexPath>()
-        
         onData = subject.asObserver()
-         
-        onIndexPath = indexPathSubject.asObserver()
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -68,10 +62,6 @@ final class TableViewCell: UITableViewCell {
         customView.snp.makeConstraints{
             $0.edges.equalToSuperview()
         }
-        
-                
-        
-        
     }
 
 }

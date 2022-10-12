@@ -66,7 +66,7 @@ class ViewController: UIViewController {
         case .table:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identify, for: indexPath)
                     as? TableViewCell else {return UITableViewCell()}
-    
+            
             cell.onData.onNext(item)
             
             return cell
