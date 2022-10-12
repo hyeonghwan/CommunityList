@@ -11,7 +11,7 @@ import SnapKit
 import RxCocoa
 import RxSwift
 
-class HorizontalCollectionViewCell: UICollectionViewCell {
+class HorizonCollectionCell: UICollectionViewCell {
     
     private lazy var requestNameType: UILabel = {
         let label = UILabel()
@@ -82,7 +82,7 @@ class HorizontalCollectionViewCell: UICollectionViewCell {
     
 }
 
-extension HorizontalCollectionViewCell{
+extension HorizonCollectionCell{
     private func layoutconfigure() {
         
         

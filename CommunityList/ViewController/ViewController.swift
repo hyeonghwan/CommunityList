@@ -30,15 +30,15 @@ class ViewController: UIViewController {
         
         tableview.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.identify)
         
-        tableview.register(HorizonTalTableSectionCell.self, forCellReuseIdentifier: HorizonTalTableSectionCell.identify)
+        tableview.register(HorizonSectionCell.self, forCellReuseIdentifier: HorizonSectionCell.identify)
 
        return tableview
     }()
     
     
-    private lazy var sectionHeader: TableViewSectionHeader = {
+    private lazy var sectionHeader: TableViewHeader = {
     
-        let view = TableViewSectionHeader(frame: .zero)
+        let view = TableViewHeader(frame: .zero)
         
         return view
     }()
@@ -56,7 +56,7 @@ class ViewController: UIViewController {
         switch section{
             
         case .collection:
-            guard let collectionViewcell = tableView.dequeueReusableCell(withIdentifier: HorizonTalTableSectionCell.identify, for: indexPath) as? HorizonTalTableSectionCell else { return UITableViewCell() }
+            guard let collectionViewcell = tableView.dequeueReusableCell(withIdentifier: HorizonSectionCell.identify, for: indexPath) as? HorizonSectionCell else { return UITableViewCell() }
             
             collectionViewcell.onData.onNext(item)
             
@@ -123,8 +123,7 @@ class ViewController: UIViewController {
         
         Observable.combineLatest(collection, table, resultSelector: { collection, table in
             collection + table
-        }).map{data in  print("combineLatest -> \(data)"); return data}
-            .bind(to: self.containerTableView.rx.items(dataSource: tableDataSource))
+        }).bind(to: self.containerTableView.rx.items(dataSource: tableDataSource))
             .disposed(by: disposeBag)
         
         sectionHeader
@@ -146,7 +145,7 @@ extension ViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section{
         case 0:
-            return CGFloat(240)
+            return UITableView.automaticDimension
         case 1:
             return CGFloat(250)
         default:

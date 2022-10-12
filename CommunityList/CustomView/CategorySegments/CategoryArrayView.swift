@@ -15,7 +15,7 @@ struct CategoryButtonAndLabel {
     let categoryLabel: CategoryLabel
 }
 
-class CategoryCombineWithLabelContainerView: UIView{
+class CategoryArrayView: UIView{
     
     let categories: [RequestType] = [ .ask, .price, .expertSearching, .request , .etc]
     
@@ -41,7 +41,7 @@ class CategoryCombineWithLabelContainerView: UIView{
     private lazy var categoryButtonItems: [CategoryButtonAndLabel] = {
         let frame: CGRect = .zero
     
-        let firstButton = CategoryRoundedButton(frame: .zero, requestType: .all, image: "category5")
+        let firstButton = CategoryRoundedButton(frame: .zero, requestType: .all, image: "category0")
         
         firstButton.isSelected = true
         
@@ -58,8 +58,11 @@ class CategoryCombineWithLabelContainerView: UIView{
         var count = 0
         categories.forEach{ requestType in
             count += 1
+            
             let button = CategoryRoundedButton(frame: .zero, requestType: requestType, image: "category\(count)")
+            
             button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
+            
             items.append(CategoryButtonAndLabel(categoryButton: button,
                                                 categoryLabel: CategoryLabel(frame: .zero, requestType: requestType)))
         }
@@ -72,10 +75,16 @@ class CategoryCombineWithLabelContainerView: UIView{
         if sender.isSelected == false {
             categoryButtonItems
                 .forEach{data in
-                data.categoryButton.isSelected = false
-                data.categoryLabel.buttonfocused = false
-            }
+                    data.categoryButton.isSelected = false
+                    data.categoryLabel.buttonfocused = false
+                }
+            
             sender.isSelected = true
+            
+            if let index = sender.imageView?.findtoChangeLabelIndex {
+                categoryButtonItems[index].categoryLabel.buttonfocused = true
+            }
+            
             onChangeRequestType(sender.getButtonType())
         }
         
@@ -95,14 +104,6 @@ class CategoryCombineWithLabelContainerView: UIView{
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.hStackViewContainer.sizeToFit()
-        for item in categoryButtonItems{
-            item.categoryButton.sizeToFit()
-        }
     }
     
     func configure() {

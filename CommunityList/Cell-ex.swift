@@ -20,11 +20,11 @@ extension IdentifiableProtocol{
 
 extension TableViewCell: IdentifiableProtocol {}
 
-extension HorizonTalTableSectionCell: IdentifiableProtocol {}
+extension HorizonSectionCell: IdentifiableProtocol {}
 
-extension HorizontalCollectionViewCell: IdentifiableProtocol {}
+extension HorizonCollectionCell: IdentifiableProtocol {}
 
-extension HorizontalCollectionHeaderView: IdentifiableProtocol {}
+extension HorizonTitleView: IdentifiableProtocol {}
 
 extension UICollectionView {
     static func settingCollectionView() -> UICollectionView {
@@ -46,7 +46,7 @@ extension UICollectionView {
         
         collectionView.backgroundColor = .tertiarySystemBackground
         
-        collectionView.register(HorizontalCollectionViewCell.self, forCellWithReuseIdentifier: HorizontalCollectionViewCell.identify)
+        collectionView.register(HorizonCollectionCell.self, forCellWithReuseIdentifier: HorizonCollectionCell.identify)
         
         return collectionView
     }

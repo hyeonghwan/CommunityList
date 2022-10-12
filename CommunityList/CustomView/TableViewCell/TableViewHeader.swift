@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 
-class TableViewSectionHeader: UIView {
+class TableViewHeader: UIView {
     
     lazy var searchBar: UISearchBar = {
        let bar = UISearchBar()
@@ -20,10 +20,17 @@ class TableViewSectionHeader: UIView {
         return bar
     }()
     
-    lazy var categorySegemts: CategorySegmentControl = {
-       let segment = CategorySegmentControl()
+    lazy var categorySegemts: CategoryView = {
+       let segment = CategoryView()
         return segment
     }()
+    
+    private lazy var separatorLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = .lightGray
+        return view
+    }()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,7 +43,7 @@ class TableViewSectionHeader: UIView {
     
     func configure() {
         
-        [searchBar,categorySegemts].forEach{
+        [searchBar,categorySegemts,separatorLine].forEach{
             self.addSubview($0)
         }
         
@@ -51,6 +58,13 @@ class TableViewSectionHeader: UIView {
             $0.leading.trailing.equalToSuperview()
 //            $0.bottom.equalToSuperview()
         }
+        separatorLine.snp.makeConstraints{
+            $0.top.equalTo(categorySegemts.snp.bottom).offset(26)
+            $0.height.equalTo(2)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
+        
         
     }
     

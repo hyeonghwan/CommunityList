@@ -11,7 +11,7 @@ import SnapKit
 import RxCocoa
 import RxSwift
 
-class CustomViewInTBCell: UIView{
+class CellContentView: UIView{
     
     private lazy var headerTypeLabel: UILabel = {
         let label = UILabel()
@@ -72,6 +72,7 @@ class CustomViewInTBCell: UIView{
     private lazy var separatorLine: UIView = {
         let view = UIView()
         view.backgroundColor = .systemGray4
+        
         return view
     }()
     
@@ -128,6 +129,7 @@ class CustomViewInTBCell: UIView{
             .disposed(by: disposeBag)
     
         layoutConfigure()
+        
     }
 
     required init?(coder: NSCoder) {
@@ -136,7 +138,7 @@ class CustomViewInTBCell: UIView{
     }
     
 }
-private extension CustomViewInTBCell {
+private extension CellContentView {
     func layoutConfigure() {
         
         [stackView,imageView,tagLabel,actionView,timeLabel,separatorLine].forEach{

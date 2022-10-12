@@ -9,10 +9,10 @@ import Foundation
 import UIKit
 import RxSwift
 
-class CategorySegmentControl: UIView{
+class CategoryView: UIView{
     
-    private lazy var containerView: CategoryCombineWithLabelContainerView = {
-      let containerView = CategoryCombineWithLabelContainerView()
+    private lazy var containerView: CategoryArrayView = {
+      let containerView = CategoryArrayView()
         return containerView
     }()
     

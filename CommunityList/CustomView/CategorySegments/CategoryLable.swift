@@ -13,15 +13,14 @@ final class CategoryLabel: UILabel{
     
     var buttonfocused: Bool = false {
         didSet{
-            self.font = buttonfocused ? UIFont.systemFont(ofSize: 14, weight: .bold) : UIFont.systemFont(ofSize: 14,
-                                                                                                           weight: .medium)
+            self.textColor = buttonfocused ? UIColor.black : UIColor.lightGray
         }
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        self.textColor = .label
+        self.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        self.textColor = .lightGray
     }
     convenience init(frame: CGRect, requestType: RequestType) {
         self.init(frame: frame)

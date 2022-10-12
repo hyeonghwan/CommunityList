@@ -11,10 +11,10 @@ import SnapKit
 import RxCocoa
 import RxSwift
 
-class HorizonTalTableSectionCell: UITableViewCell{
+class HorizonSectionCell: UITableViewCell{
     
-    lazy var headerView: HorizontalCollectionHeaderView = {
-        let view = HorizontalCollectionHeaderView()
+    lazy var headerView: HorizonTitleView = {
+        let view = HorizonTitleView()
         return view
     }()
     
@@ -41,8 +41,8 @@ class HorizonTalTableSectionCell: UITableViewCell{
         
         subject
             .map{ rxDataModel in  return rxDataModel.items }
-            .bind(to: self.horizontalCollectionView.rx.items(cellIdentifier: HorizontalCollectionViewCell.identify,
-                                                             cellType: HorizontalCollectionViewCell.self)){
+            .bind(to: self.horizontalCollectionView.rx.items(cellIdentifier: HorizonCollectionCell.identify,
+                                                             cellType: HorizonCollectionCell.self)){
                 indexPath, item, cell in
                 
                 cell.onCollectionData.onNext(item)
@@ -59,15 +59,17 @@ class HorizonTalTableSectionCell: UITableViewCell{
         self.contentView.addSubview(horizontalCollectionView)
         
         headerView.snp.makeConstraints{
-            $0.top.equalToSuperview()
+            $0.top.equalToSuperview().inset(39)
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
         }
         
+        
         horizontalCollectionView.snp.makeConstraints{
-            $0.top.equalTo(headerView.snp.bottom).offset(7)
+            $0.height.equalTo(200)
+            $0.top.equalTo(headerView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
-            
+            $0.bottom.equalToSuperview()
         }
     }
 }

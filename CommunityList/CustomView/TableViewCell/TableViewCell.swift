@@ -13,8 +13,8 @@ import RxCocoa
 
 final class TableViewCell: UITableViewCell {
 
-    private lazy var customView: CustomViewInTBCell = {
-        let view = CustomViewInTBCell()
+    private lazy var customView: CellContentView = {
+        let view = CellContentView()
         
         return view
     }()
@@ -50,7 +50,7 @@ final class TableViewCell: UITableViewCell {
                 }
             })
             .disposed(by: disposeBag)
-    
+        
         configure()
     }
 
