@@ -37,6 +37,7 @@
 		968CA1F128F5D3BE008EA35E /* Image-ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968CA1F028F5D3BE008EA35E /* Image-ex.swift */; };
 		968CA1F328F681B7008EA35E /* DateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968CA1F228F681B7008EA35E /* DateFormat.swift */; };
 		968CA1F528F6C798008EA35E /* RightNavigationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968CA1F428F6C798008EA35E /* RightNavigationItem.swift */; };
+		968CA1F728F6D521008EA35E /* NoneDataFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968CA1F628F6D521008EA35E /* NoneDataFooterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,7 @@
 		968CA1F028F5D3BE008EA35E /* Image-ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image-ex.swift"; sourceTree = "<group>"; };
 		968CA1F228F681B7008EA35E /* DateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormat.swift; sourceTree = "<group>"; };
 		968CA1F428F6C798008EA35E /* RightNavigationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightNavigationItem.swift; sourceTree = "<group>"; };
+		968CA1F628F6D521008EA35E /* NoneDataFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoneDataFooterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +180,7 @@
 				9688309E28F062100036705E /* HorizonSectionCell.swift */,
 				9688309428EEE5C10036705E /* TableViewCell.swift */,
 				965C59B428F4285B00A80432 /* CellContentView.swift */,
+				968CA1F628F6D521008EA35E /* NoneDataFooterView.swift */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 				9688308728EEB4060036705E /* Cell-ex.swift in Sources */,
 				9688306728EEA6DD0036705E /* AppDelegate.swift in Sources */,
 				9688306928EEA6DD0036705E /* SceneDelegate.swift in Sources */,
+				968CA1F728F6D521008EA35E /* NoneDataFooterView.swift in Sources */,
 				9688309028EEDEB60036705E /* RxViewModel.swift in Sources */,
 				968CA1EF28F5C3BE008EA35E /* HorizonTitleView.swift in Sources */,
 				9688308B28EED34A0036705E /* CategoryLable.swift in Sources */,

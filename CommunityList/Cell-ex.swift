@@ -17,6 +17,7 @@ extension IdentifiableProtocol{
         return String(describing: Self.self)
     }
 }
+extension NoneDateFooterView: IdentifiableProtocol {}
 
 extension TableViewCell: IdentifiableProtocol {}
 

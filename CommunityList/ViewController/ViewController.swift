@@ -43,9 +43,16 @@ class ViewController: UIViewController {
         return view
     }()
     
+    private lazy var footerView: NoneDataFooterView = {
+        let view = NoneDataFooterView()
+        
+        return view
+    }()
+    
     enum TableViewSectionType: Int{
         case collection = 0
         case table = 1
+        case none = 2
     }
     
     var tableDataSource = RxTableViewSectionedReloadDataSource<RxDataSection>(configureCell: {
@@ -163,15 +170,35 @@ extension ViewController: UITableViewDelegate{
         }
     }
     
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section{
-        case 0:
+        case TableViewSectionType.collection.rawValue:
             return CGFloat(187.7)
         default:
             return CGFloat(0)
             
         }
     }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        switch section{
+        case TableViewSectionType.table.rawValue:
+            return footerView
+        default:
+            return nil
+        }
+    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        switch section {
+        case TableViewSectionType.table.rawValue:
+            return CGFloat(50)
+        default:
+            return CGFloat(0)
+        }
+    }
+    
+    
 }
 
 
