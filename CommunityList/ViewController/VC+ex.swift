@@ -41,10 +41,20 @@ extension ViewController{
     }
     
     func settingNavigation(){
+       
         self.title = "고객센터"
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.label]
         navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.label]
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let view = RightNavigationItem(frame: .zero)
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: view)
+        
+        view.onEventMove = {
+            self.containerTableView.setContentOffset(CGPointMake(0, 0), animated: true)
+        }
+        
     }
     
     func getNavigationHeightSize() -> CGFloat{

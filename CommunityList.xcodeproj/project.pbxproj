@@ -36,6 +36,7 @@
 		968CA1EF28F5C3BE008EA35E /* HorizonTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968CA1EE28F5C3BE008EA35E /* HorizonTitleView.swift */; };
 		968CA1F128F5D3BE008EA35E /* Image-ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968CA1F028F5D3BE008EA35E /* Image-ex.swift */; };
 		968CA1F328F681B7008EA35E /* DateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968CA1F228F681B7008EA35E /* DateFormat.swift */; };
+		968CA1F528F6C798008EA35E /* RightNavigationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968CA1F428F6C798008EA35E /* RightNavigationItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,7 @@
 		968CA1EE28F5C3BE008EA35E /* HorizonTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizonTitleView.swift; sourceTree = "<group>"; };
 		968CA1F028F5D3BE008EA35E /* Image-ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image-ex.swift"; sourceTree = "<group>"; };
 		968CA1F228F681B7008EA35E /* DateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormat.swift; sourceTree = "<group>"; };
+		968CA1F428F6C798008EA35E /* RightNavigationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightNavigationItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				9688306A28EEA6DD0036705E /* ViewController.swift */,
+				968CA1F428F6C798008EA35E /* RightNavigationItem.swift */,
 				9688307E28EEAB460036705E /* VC+ex.swift */,
 			);
 			path = ViewController;
@@ -292,6 +295,7 @@
 				9688308328EEB0240036705E /* CategoryView.swift in Sources */,
 				968830AB28F2C3800036705E /* CommunityTableModel.swift in Sources */,
 				9688309D28F0386D0036705E /* CommunityIdentiable.swift in Sources */,
+				968CA1F528F6C798008EA35E /* RightNavigationItem.swift in Sources */,
 				968CA1F328F681B7008EA35E /* DateFormat.swift in Sources */,
 				968830A928F29F780036705E /* file.swift in Sources */,
 			);
