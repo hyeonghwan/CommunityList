@@ -42,7 +42,7 @@ extension ViewController{
     
     func settingNavigation(){
        
-        self.title = "고객센터"
+        self.title = "홈"
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.label]
         navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.label]
         navigationController?.navigationBar.prefersLargeTitles = true

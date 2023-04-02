@@ -69,7 +69,6 @@ class ViewController: UIViewController {
             
             return collectionViewcell
             
-            
         case .table:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identify, for: indexPath)
                     as? TableViewCell else {return UITableViewCell()}
@@ -77,11 +76,11 @@ class ViewController: UIViewController {
             cell.onData.onNext(item)
             
             return cell
-            
         default:
             assert(false,"error")
         }
     })
+    
     
     init(_ viewModel: RxViewModelType = RxViewModel() ){
         self.viewModel = viewModel
@@ -110,6 +109,7 @@ class ViewController: UIViewController {
         
         self.containerTableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
+        
         setUpBinding()
         
    }
@@ -197,8 +197,6 @@ extension ViewController: UITableViewDelegate{
             return CGFloat(0)
         }
     }
-    
-    
 }
 
 

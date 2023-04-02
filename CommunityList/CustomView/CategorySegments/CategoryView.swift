@@ -38,11 +38,5 @@ class CategoryView: UIView{
             $0.leading.trailing.equalToSuperview().inset(12)
             $0.bottom.equalToSuperview()
         }
-        
-        
-        
     }
-    
-    
-    
 }

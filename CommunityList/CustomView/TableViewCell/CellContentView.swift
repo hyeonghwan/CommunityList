@@ -94,61 +94,36 @@ class CellContentView: UIView{
         return label
     }()
     
-    var customViewObserver: AnyObserver<CommunityTableModel>
+//    var customViewObserver: AnyObserver<CommunityTableModel>
+//
+//    var disposeBag = DisposeBag()
     
-    var disposeBag = DisposeBag()
-    
-    var onTimeChanged: (()->())?
+//    var onTimeChanged: (()->())?
     
     override init(frame: CGRect) {
         
         
-        let transferData = PublishSubject<CommunityTableModel>()
-        
-        customViewObserver = transferData.asObserver()
         super.init(frame: frame)
-        
-        transferData
-            .map{ $0.communityData.headerTitleType.rawValue}
-            .bind(to: headerTypeLabel.rx.text)
-            .disposed(by: disposeBag)
-        
-        transferData
-            .map{ $0.communityData.content}
-            .bind(to: contentLable.rx.text)
-            .disposed(by: disposeBag)
-        
-        transferData
-            .map{ $0.title }
-            .bind(to: titleLabel.rx.text)
-            .disposed(by: disposeBag)
-        
-        transferData
-            .map{ UIImage(named: $0.image)}
-            .bind(to: imageView.rx.image)
-            .disposed(by: disposeBag)
-        
-        transferData
-            .map{ $0.tag }
-            .bind(to: tagLabel.rx.text)
-            .disposed(by: disposeBag)
-        
-        transferData
-            .map{data in return data.communityData }
-            .subscribe(onNext: actionView.observer.onNext(_:))
-            .disposed(by: disposeBag)
-        
-        
-        transferData
-            .map{data in
-                return DateFormat().caluculateTime(data.communityData.timeWhenWrite)
-            }
-            .bind(to: timeLabel.rx.text)
-            .disposed(by: disposeBag)
-        
-        
-    
+            
+
         layoutConfigure()
+        
+    }
+    
+    var cellBinder: Binder<CommunityTableModel> {
+        return Binder(self) { cell, model in
+            cell.headerTypeLabel.text = model.communityData.headerTitleType.rawValue
+            cell.contentLable.text = model.communityData.content
+            cell.titleLabel.text = model.title
+            cell.imageView.image = UIImage(named: model.image)
+            cell.tagLabel.text = model.tag
+            cell.timeLabel.text =  DateFormat().caluculateTime(model.communityData.timeWhenWrite)
+            
+            cell.actionView.observer.onNext(model.communityData)
+        }
+    }
+    
+    func settUpBinding(){
         
     }
 

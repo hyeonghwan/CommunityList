@@ -25,6 +25,19 @@ struct CommunityContainer {
                                  "2022-10-12 18:07:27"].randomElement()!
     var heartCount: String = "1.4k"
     var commentCount: String = "1k"
+    
+    init(){
+        self.headerTitleType = .etc
+        self.content = ""
+    }
+    
+    init(headerTitleType: RequestType, content: String, timeWhenWrite: String, heartCount: String, commentCount: String) {
+        self.headerTitleType = headerTitleType
+        self.content = content
+        self.timeWhenWrite = timeWhenWrite
+        self.heartCount = heartCount
+        self.commentCount = commentCount
+    }
 }
 
 extension CommunityContainer: IdentifiableType,Equatable{

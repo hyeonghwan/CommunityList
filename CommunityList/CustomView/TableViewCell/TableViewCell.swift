@@ -34,10 +34,14 @@ final class TableViewCell: UITableViewCell {
         
         subject
             .map{rxData in rxData.items.first!}
+            
             .subscribe(onNext: { [weak self] data in
                 guard let self = self else { return }
+                
                 switch data {
+                
                 case let .tableItem(item):
+                
                     self.customView.customViewObserver.onNext(item)
                 default:
                     break
